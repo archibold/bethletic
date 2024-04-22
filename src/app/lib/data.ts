@@ -45,7 +45,6 @@ export async function fetchExercisesByEquipment(equipment: string) {
       LIMIT 4`;
 
         const exercises: Array<Exercise> = data.rows;
-        console.log(exercises);
         return exercises;
     } catch (error) {
         console.error("Database Error:", error);

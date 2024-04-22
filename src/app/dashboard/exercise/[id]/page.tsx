@@ -31,8 +31,6 @@ export default async function Page({
                 href: (href = href + label + "/"),
             };
         });
-
-        console.log(breadcrumbs);
     }
     breadcrumbs.push({
         label: exercise.name,
