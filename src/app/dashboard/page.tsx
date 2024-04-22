@@ -1,22 +1,11 @@
 import { lusitana } from "@/app/ui/fonts";
-import {
-    fetchExampleExercise,
-    fetchExampleExerciseByTarget,
-    fetchExampleExerciseByEquipment,
-} from "../lib/data";
-import Card from "../ui/dashboard/card";
+import { CardsSkeleton } from "../ui/skeletons";
+import { Suspense } from "react";
+import SampleExercises from "../ui/dashboard/exercises/sample-exercises";
+import TargetRandomExercises from "../ui/dashboard/exercises/random-target";
+import EquipmentRandomExercises from "../ui/dashboard/exercises/random-equipment";
 
-export default async function Page() {
-    const [
-        exercises,
-        exercisec_by_random_target,
-        exercisec_by_random_equipment,
-    ] = await Promise.all([
-        fetchExampleExercise(),
-        fetchExampleExerciseByTarget(),
-        fetchExampleExerciseByEquipment(),
-    ]);
-
+export default function Page() {
     return (
         <main>
             <div className="mb-5">
@@ -25,39 +14,29 @@ export default async function Page() {
                 >
                     Sample exercises
                 </h1>
-
-                <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-                    {exercises.map((exercise) => {
-                        return <Card key={exercise._id} exercise={exercise} />;
-                    })}
-                </div>
+                <Suspense fallback={<CardsSkeleton />}>
+                    <SampleExercises />
+                </Suspense>
             </div>
             <div className="mb-5">
                 <h1
                     className={`${lusitana.className} mb-4 text-xl md:text-2xl`}
                 >
-                    Exercises by {exercisec_by_random_target[0].selected_target}
+                    By target
                 </h1>
-
-                <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-                    {exercisec_by_random_target.map((exercise) => {
-                        return <Card key={exercise._id} exercise={exercise} />;
-                    })}
-                </div>
+                <Suspense fallback={<CardsSkeleton />}>
+                    <TargetRandomExercises />
+                </Suspense>
             </div>
             <div className="mb-5">
                 <h1
                     className={`${lusitana.className} mb-4 text-xl md:text-2xl`}
                 >
-                    Exercises by{" "}
-                    {exercisec_by_random_equipment[0].selected_equipment}
+                    By equipment
                 </h1>
-
-                <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-                    {exercisec_by_random_equipment.map((exercise) => {
-                        return <Card key={exercise._id} exercise={exercise} />;
-                    })}
-                </div>
+                <Suspense fallback={<CardsSkeleton />}>
+                    <EquipmentRandomExercises />
+                </Suspense>
             </div>
         </main>
     );

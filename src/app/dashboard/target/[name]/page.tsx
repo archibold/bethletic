@@ -1,16 +1,10 @@
-import { lusitana } from "@/app/ui/fonts";
-import { fetchExercisesByTarget } from "../../../lib/data";
-import Card from "../../../ui/dashboard/card";
 import Breadcrumbs from "../../../ui/dashboard/breadcrumbs";
-import { notFound } from "next/navigation";
+import TargetByName from "../../../ui/dashboard/target/target-by-name";
+import { Suspense } from "react";
+import { CardsSkeleton } from "../../../ui/skeletons";
 
-export default async function Page({ params }: { params: { name: string } }) {
-    const encodedURI = decodeURI(params.name);
-    const exercises = await fetchExercisesByTarget(encodedURI);
-
-    if (exercises.length === 0) {
-        notFound();
-    }
+export default function Page({ params }: { params: { name: string } }) {
+    const name = decodeURI(params.name);
 
     return (
         <main>
@@ -21,24 +15,15 @@ export default async function Page({ params }: { params: { name: string } }) {
                         href: "/dashboard/target/",
                     },
                     {
-                        label: encodedURI,
+                        label: name,
                         href: `/dashboard/target/${params.name}`,
                         active: true,
                     },
                 ]}
             />
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-                {exercises.map((exercise) => {
-                    return (
-                        <Card
-                            key={exercise._id}
-                            exercise={exercise}
-                            category="target"
-                            subcategory={encodedURI}
-                        />
-                    );
-                })}
-            </div>
+            <Suspense fallback={<CardsSkeleton />}>
+                <TargetByName name={name} />
+            </Suspense>
         </main>
     );
 }

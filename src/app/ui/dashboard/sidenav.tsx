@@ -11,8 +11,8 @@ export default function SideNav() {
             >
                 <div className="flex flex-col items-center ">
                     <Image
-                        className="rounded-full hidden md:flex mb-2"
-                        src="/logo.jpeg"
+                        className="opacity-50 rounded-full hidden md:flex mb-2"
+                        src="/b_logo.jpeg"
                         alt="logo"
                         width={100}
                         height={100}

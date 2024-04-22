@@ -1,26 +1,22 @@
-import { notFound } from "next/navigation";
-import { fetchExercise } from "../../../lib/data";
 import Exercise from "../../../ui/dashboard/exercise";
 import Breadcrumbs from "../../../ui/dashboard/breadcrumbs";
+import { Suspense } from "react";
+import { ExerciseSkeleton } from "../../../ui/skeletons";
 
-export default async function Page({
+export default function Page({
     params,
     searchParams,
 }: {
     params: { id: string };
     searchParams?: {
         query?: string;
+        name?: string;
     };
 }) {
-    const exercise = await fetchExercise(params.id);
     let label = "Exercises";
     let href = "/dashboard/";
     let breadcrumbs: Array<{ label: string; href: string; active?: boolean }> =
         [];
-
-    if (!exercise) {
-        notFound();
-    }
 
     if (searchParams?.query) {
         let href = "/dashboard/";
@@ -32,15 +28,18 @@ export default async function Page({
             };
         });
     }
+
     breadcrumbs.push({
-        label: exercise.name,
-        href: `/dashboard/exercise/${exercise._id}`,
+        label: searchParams?.name || "",
+        href: `/dashboard/exercise/${params.id}`,
         active: true,
     });
     return (
         <main>
             <Breadcrumbs breadcrumbs={breadcrumbs} />
-            <Exercise exercise={exercise} />
+            <Suspense fallback={<ExerciseSkeleton />}>
+                <Exercise id={params.id} />
+            </Suspense>
         </main>
     );
 }

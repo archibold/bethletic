@@ -1,6 +1,3 @@
-import { lusitana } from "../fonts";
-import Image from "next/image";
-import Tag from "./tag";
 import Link from "next/link";
 
 export default function CategoryCard({
@@ -17,9 +14,6 @@ export default function CategoryCard({
                     {name}
                 </div>
             </Link>
-            {/* <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-                Example
-            </h2> */}
         </div>
     );
 }

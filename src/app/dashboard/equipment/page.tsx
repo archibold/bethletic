@@ -1,27 +1,17 @@
 import { lusitana } from "@/app/ui/fonts";
-import { fetchEquipmentCategories } from "../../lib/data";
-import CategoryCard from "../../ui/dashboard/categoryCard";
+import EquipmentExercises from "../../ui/dashboard/equipment/equipment-exercises";
+import { Suspense } from "react";
+import { CategoriesSkeleton } from "../../ui/skeletons";
 
-export default async function Page() {
-    const categories = await fetchEquipmentCategories();
+export default function Page() {
     return (
         <main>
             <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-                By Equipment
+                By equipment
             </h1>
-
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-                {/* <Suspense fallback={<CardsSkeleton />}> */}
-                {categories.map((category) => {
-                    return (
-                        <CategoryCard
-                            key={category.equipment}
-                            name={category.equipment}
-                            category="equipment"
-                        />
-                    );
-                })}
-            </div>
+            <Suspense fallback={<CategoriesSkeleton />}>
+                <EquipmentExercises />
+            </Suspense>
         </main>
     );
 }

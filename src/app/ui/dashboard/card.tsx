@@ -13,9 +13,9 @@ export default function Card({
     category?: string;
     subcategory?: string;
 }) {
-    let query = "";
+    let query = `?name=${exercise.name}`;
     if (category) {
-        query = `?query=${category}/${subcategory}`;
+        query += `&query=${category}/${subcategory}`;
     }
 
     return (

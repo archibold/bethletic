@@ -1,5 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { Exercise } from "./definitions";
+import { unstable_noStore } from "next/cache";
 
 export async function fetchExampleExercise() {
     try {
@@ -79,8 +80,7 @@ export async function fetchExercisesByTarget(target: string) {
         FROM exercise
         WHERE target = ${target}
         OR  ${target}=ANY(secondary_muscles)
-        ORDER BY random()
-        LIMIT 4`;
+        ORDER BY random()`;
 
         const exercises: Array<Exercise> = data.rows;
         return exercises;
@@ -96,8 +96,7 @@ export async function fetchExercisesByEquipment(equipment: string) {
         SELECT *
         FROM exercise
         WHERE equipment = ${equipment}
-        ORDER BY random()
-        LIMIT 4`;
+        ORDER BY random()`;
 
         const exercises: Array<Exercise> = data.rows;
         return exercises;
@@ -130,7 +129,6 @@ export async function fetchTargetCategories() {
         SELECT DISTINCT unnest(secondary_muscles) FROM exercise ORDER BY target`;
 
         const target: Array<Pick<Exercise, "target">> = data.rows;
-
         return target;
     } catch (error) {
         console.error("Database Error:", error);
