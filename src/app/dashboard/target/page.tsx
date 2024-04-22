@@ -2,6 +2,11 @@ import { lusitana } from "@/app/ui/fonts";
 import TargetExercises from "../../ui/dashboard/target/target-exercises";
 import { Suspense } from "react";
 import { CategoriesSkeleton } from "../../ui/skeletons";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "By target",
+};
 
 export default function Page() {
     return (

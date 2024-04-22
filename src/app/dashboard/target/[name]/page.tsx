@@ -2,7 +2,11 @@ import Breadcrumbs from "../../../ui/dashboard/breadcrumbs";
 import TargetByName from "../../../ui/dashboard/target/target-by-name";
 import { Suspense } from "react";
 import { CardsSkeleton } from "../../../ui/skeletons";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: "By target",
+};
 export default function Page({ params }: { params: { name: string } }) {
     const name = decodeURI(params.name);
 

@@ -3,8 +3,13 @@ import { inter } from "@/app/ui/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-    title: "Bethletic",
-    description: "Exercise monitor app",
+    title: {
+        template: "%s | Bethletic Dashboard",
+        default: "Bethletic",
+    },
+    description:
+        "The Greatest exercise app with over 1000 different exercises.",
+    // metadataBase: new URL("https://url"),
 };
 
 export default function RootLayout({

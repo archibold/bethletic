@@ -5,6 +5,10 @@ import SampleExercises from "../ui/dashboard/exercises/sample-exercises";
 import TargetRandomExercises from "../ui/dashboard/exercises/random-target";
 import EquipmentRandomExercises from "../ui/dashboard/exercises/random-equipment";
 
+export const metadata: Metadata = {
+    title: "Dashboard",
+};
+
 export default function Page() {
     return (
         <main>

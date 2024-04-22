@@ -2,7 +2,11 @@ import Exercise from "../../../ui/dashboard/exercise";
 import Breadcrumbs from "../../../ui/dashboard/breadcrumbs";
 import { Suspense } from "react";
 import { ExerciseSkeleton } from "../../../ui/skeletons";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: "Exercise",
+};
 export default function Page({
     params,
     searchParams,
