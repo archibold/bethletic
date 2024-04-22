@@ -2,7 +2,7 @@ import { fetchExercisesByTarget } from "../../../lib/data";
 import Card from "../card";
 import { notFound } from "next/navigation";
 
-export default async function EquipmenyByName({ name }: { name: string }) {
+export default async function TargetByName({ name }: { name: string }) {
     const exercises = await fetchExercisesByTarget(name);
 
     if (exercises.length === 0) {
