@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import SampleExercises from "../ui/dashboard/exercises/sample-exercises";
 import TargetRandomExercises from "../ui/dashboard/exercises/random-target";
 import EquipmentRandomExercises from "../ui/dashboard/exercises/random-equipment";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Dashboard",
