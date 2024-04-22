@@ -2,10 +2,16 @@ import { lusitana } from "@/app/ui/fonts";
 import { fetchExercisesByEquipment } from "../../../lib/data";
 import Card from "../../../ui/dashboard/card";
 import Breadcrumbs from "../../../ui/dashboard/breadcrumbs";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { name: string } }) {
     const encodedURI = decodeURI(params.name);
     const exercises = await fetchExercisesByEquipment(encodedURI);
+
+    if (exercises.length === 0) {
+        notFound();
+    }
+
     return (
         <main>
             <Breadcrumbs
@@ -26,13 +32,7 @@ export default async function Page({ params }: { params: { name: string } }) {
                     return (
                         <Card
                             key={exercise._id}
-                            id={exercise._id}
-                            title={exercise.name}
-                            url={exercise.gif_url}
-                            bodyPart={exercise.body_part}
-                            equipment={exercise.equipment}
-                            target={exercise.target}
-                            secondaryMuscles={exercise.secondary_muscles}
+                            exercise={exercise}
                             category="equipment"
                             subcategory={encodedURI}
                         />

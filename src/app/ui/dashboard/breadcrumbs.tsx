@@ -20,7 +20,7 @@ export default function Breadcrumbs({
     return (
         <nav aria-label="Breadcrumb" className="mb-6 block">
             <button
-                className="mb-2 pr-2 pt-2 pb-2 rounded-s text-gray-200 flex items-center justify-center hover:bg-gray-200 hover:text-gray-50"
+                className="mb-2 p-2 rounded-md text-gray-300 flex items-center justify-center hover:bg-gray-200 hover:text-gray-50"
                 onClick={router.back}
             >
                 <ArrowLeftIcon className="mr-2 h-4 w-4" /> Go back

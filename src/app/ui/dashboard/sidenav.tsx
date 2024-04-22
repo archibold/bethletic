@@ -6,12 +6,12 @@ export default function SideNav() {
     return (
         <div className="flex h-full flex-col px-3 py-4 md:px-2">
             <Link
-                className="flex h-20 items-center justify-center rounded-md bg-amber-400 md:h-44"
+                className="mb-2 flex h-20 items-center justify-center rounded-md bg-amber-100 md:h-44"
                 href="/dashboard"
             >
-                <div className="flex flex-col items-center text-white ">
+                <div className="flex flex-col items-center ">
                     <Image
-                        className="rounded-full hidden md:flex"
+                        className="rounded-full hidden md:flex mb-2"
                         src="/logo.jpeg"
                         alt="logo"
                         width={100}

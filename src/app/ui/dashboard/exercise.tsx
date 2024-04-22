@@ -1,3 +1,4 @@
+import { lusitana } from "@/app/ui/fonts";
 import { Exercise as ExerciseType } from "../../lib/definitions";
 import Tag from "./tag";
 import Image from "next/image";
@@ -28,7 +29,7 @@ export default function Exercise({ exercise }: { exercise: ExerciseType }) {
                     </div>
                 </div>
 
-                <ol className="list-decimal">
+                <ol className={`${lusitana.className} list-decimal`}>
                     {exercise.instructions.map((step) => (
                         <li className="py-2 ml-7" key={step}>
                             {step}
