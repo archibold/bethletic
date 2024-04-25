@@ -19,6 +19,12 @@ export default function Card({
         query += `&query=${category}/${subcategory}`;
     }
 
+    const gif_url =
+        exercise.gif_url.substring(0, 50) +
+        "w_150/q_50/f_auto/" +
+        exercise.gif_url.substring(50) +
+        ".gif";
+
     return (
         <div className="w-full md:col-span-2 rounded-xl bg-gray-100 hover:bg-gray-200 relative ">
             <Link
@@ -31,7 +37,7 @@ export default function Card({
                 </div>
                 <Image
                     alt="name"
-                    src={exercise.gif_url}
+                    src={gif_url}
                     unoptimized={true}
                     width={150}
                     height={150}
