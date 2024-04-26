@@ -1,7 +1,7 @@
-import { lusitana } from "@/app/ui/fonts";
-import TargetExercises from "../../ui/dashboard/target/target-exercises";
 import { Suspense } from "react";
-import { CategoriesSkeleton } from "../../ui/skeletons";
+import { lusitana } from "@/app/fonts";
+import TargetExercises from "@/app/ui/dashboard/target/target-exercises";
+import { CategoriesSkeleton } from "@/app/ui/skeletons";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

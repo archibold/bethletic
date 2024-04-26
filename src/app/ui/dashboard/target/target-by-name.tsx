@@ -1,5 +1,5 @@
-import { fetchExercisesByTarget } from "../../../lib/data";
-import Card from "../card";
+import { fetchExercisesByTarget } from "@/app/lib/data";
+import Card from "@/app/ui/dashboard/card";
 import { notFound } from "next/navigation";
 
 export default async function TargetByName({ name }: { name: string }) {

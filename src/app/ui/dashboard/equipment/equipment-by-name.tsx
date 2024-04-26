@@ -1,5 +1,5 @@
-import { fetchExercisesByEquipment } from "../../../lib/data";
-import Card from "../card";
+import { fetchExercisesByEquipment } from "@/app/lib/data";
+import Card from "@/app/ui/dashboard/card";
 import { notFound } from "next/navigation";
 
 export default async function EquipmenyByName({ name }: { name: string }) {

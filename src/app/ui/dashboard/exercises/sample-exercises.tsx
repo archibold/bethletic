@@ -1,5 +1,5 @@
-import { fetchExampleExercise } from "../../../lib/data";
-import Card from "../card";
+import { fetchExampleExercise } from "@/app/lib/data";
+import Card from "@/app/ui/dashboard/card";
 
 export default async function SampleExercises() {
     const exercises = await fetchExampleExercise();

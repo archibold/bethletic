@@ -1,7 +1,7 @@
-import Exercise from "../../../ui/dashboard/exercise";
-import Breadcrumbs from "../../../ui/dashboard/breadcrumbs";
+import Exercise from "@/app/ui/dashboard/exercise";
+import Breadcrumbs from "@/app/ui/dashboard/breadcrumbs";
 import { Suspense } from "react";
-import { ExerciseSkeleton } from "../../../ui/skeletons";
+import { ExerciseSkeleton } from "@/app/ui/skeletons";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

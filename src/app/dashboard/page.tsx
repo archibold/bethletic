@@ -1,9 +1,9 @@
-import { lusitana } from "@/app/ui/fonts";
-import { CardsSkeleton } from "../ui/skeletons";
+import { lusitana } from "@/app/fonts";
+import { CardsSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
-import SampleExercises from "../ui/dashboard/exercises/sample-exercises";
-import TargetRandomExercises from "../ui/dashboard/exercises/random-target";
-import EquipmentRandomExercises from "../ui/dashboard/exercises/random-equipment";
+import SampleExercises from "@/app/ui/dashboard/exercises/sample-exercises";
+import TargetRandomExercises from "@/app/ui/dashboard/exercises/random-target";
+import EquipmentRandomExercises from "@/app/ui/dashboard/exercises/random-equipment";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

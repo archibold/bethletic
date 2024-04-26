@@ -1,8 +1,9 @@
-import { lusitana } from "../fonts";
+import { lusitana } from "@/app/fonts";
 import Image from "next/image";
 import Tag from "./tag";
 import Link from "next/link";
-import { Exercise } from "../../lib/definitions";
+import { Exercise } from "@/app/lib/definitions";
+import getSmallImageUrl from "@/app/lib/utils";
 
 export default function Card({
     exercise,
@@ -19,11 +20,7 @@ export default function Card({
         query += `&query=${category}/${subcategory}`;
     }
 
-    const gif_url =
-        exercise.gif_url.substring(0, 50) +
-        "w_150/q_50/f_auto/" +
-        exercise.gif_url.substring(50) +
-        ".gif";
+    const gif_url = getSmallImageUrl(exercise.gif_url);
 
     return (
         <div className="w-full md:col-span-2 rounded-xl bg-gray-100 hover:bg-gray-200 relative ">

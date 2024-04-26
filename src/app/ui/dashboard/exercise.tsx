@@ -1,7 +1,7 @@
-import { lusitana } from "@/app/ui/fonts";
+import { lusitana } from "@/app/fonts";
 import Tag from "./tag";
 import Image from "next/image";
-import { fetchExercise } from "../../lib/data";
+import { fetchExercise } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 
 export default async function Exercise({ id }: { id: string }) {

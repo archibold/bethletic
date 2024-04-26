@@ -1,5 +1,5 @@
-import { fetchExampleExerciseByEquipment } from "../../../lib/data";
-import Card from "../card";
+import { fetchExampleExerciseByEquipment } from "@/app/lib/data";
+import Card from "@/app/ui/dashboard/card";
 
 export default async function EquipmentRandomExercises() {
     const exercisec_by_random_equipment =
