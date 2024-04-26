@@ -1,4 +1,4 @@
-import { lusitana } from "@/app/fonts";
+import { inter } from "@/app/fonts";
 import EquipmentExercises from "@/app/ui/dashboard/equipment/equipment-exercises";
 import { Suspense } from "react";
 import { CategoriesSkeleton } from "@/app/ui/skeletons";
@@ -11,7 +11,9 @@ export const metadata: Metadata = {
 export default function Page() {
     return (
         <main>
-            <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+            <h1
+                className={`${inter.className} font-medium leading-tight tracking-tighter mb-4 text-xl md:text-2xl`}
+            >
                 By equipment
             </h1>
             <Suspense fallback={<CategoriesSkeleton />}>

@@ -13,34 +13,20 @@ export default function Page({
 }: {
     params: { id: string };
     searchParams?: {
-        query?: string;
         name?: string;
     };
 }) {
-    let label = "Exercises";
-    let href = "/dashboard/";
-    let breadcrumbs: Array<{ label: string; href: string; active?: boolean }> =
-        [];
-
-    if (searchParams?.query) {
-        let href = "/dashboard/";
-        const splitedLabel = searchParams?.query.split("/");
-        breadcrumbs = splitedLabel.map((label, index) => {
-            return {
-                label: index === 0 ? `By ${label}` : label,
-                href: (href = href + label + "/"),
-            };
-        });
-    }
-
-    breadcrumbs.push({
-        label: searchParams?.name || "",
-        href: `/dashboard/exercise/${params.id}`,
-        active: true,
-    });
     return (
         <main>
-            <Breadcrumbs breadcrumbs={breadcrumbs} />
+            <Breadcrumbs
+                breadcrumbs={[
+                    {
+                        label: searchParams?.name || "",
+                        href: `/dashboard/exercise/${params.id}`,
+                        active: true,
+                    },
+                ]}
+            />
             <Suspense fallback={<ExerciseSkeleton />}>
                 <Exercise id={params.id} />
             </Suspense>

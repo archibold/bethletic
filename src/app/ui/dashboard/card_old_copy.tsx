@@ -41,21 +41,15 @@ export default function Card({
                 />
             </div>
             <h2
-                className={`${inter.className} leading-tight tracking-tighter mx-3 text-xl`}
+                className={`${inter.className} leading-tight tracking-tighter ml-3 mr-3 text-xl pb-2`}
             >
                 {exercise.name}
             </h2>
-            <div className="m-3 mt-0 text-gray-500">
-                <p>
-                    {exercise.secondary_muscles.map((muscle, index) => {
-                        return (
-                            muscle +
-                            (index + 1 != exercise.secondary_muscles.length
-                                ? ", "
-                                : "")
-                        );
-                    })}
-                </p>
+            <div className="ml-2 mr-2 relative flex pb-2 pt-2 items-center flex-wrap z-20">
+                <Tag name={exercise.target} />
+                {exercise.secondary_muscles.map((muscle) => (
+                    <Tag key={muscle} name={muscle} secondary />
+                ))}
             </div>
         </div>
     );

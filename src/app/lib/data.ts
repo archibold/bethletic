@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { Exercise } from "./definitions";
-import { unstable_noStore } from "next/cache";
+import { capitalize } from "./utils";
 
 export async function fetchExampleExercise() {
     try {
