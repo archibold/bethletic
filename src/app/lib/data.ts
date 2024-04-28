@@ -1,6 +1,5 @@
 import { sql } from "@vercel/postgres";
 import { Exercise } from "./definitions";
-import { capitalize } from "./utils";
 
 export async function fetchExampleExercise() {
     try {
