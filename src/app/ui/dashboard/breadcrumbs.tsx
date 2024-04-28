@@ -2,7 +2,7 @@
 
 import { clsx } from "clsx";
 import Link from "next/link";
-import { lusitana } from "@/app/fonts";
+import { inter } from "@/app/fonts";
 import { useRouter } from "next/navigation";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
@@ -19,7 +19,7 @@ export default function Breadcrumbs({
 }) {
     const router = useRouter();
     return (
-        <nav aria-label="Breadcrumb" className="mb-6 block">
+        <nav aria-label="Breadcrumb" className="block">
             <button
                 className="mb-2 p-2 rounded-md text-gray-300 flex items-center justify-center hover:bg-gray-200 hover:text-gray-50"
                 onClick={router.back}
@@ -28,7 +28,7 @@ export default function Breadcrumbs({
             </button>
             <ol
                 className={clsx(
-                    lusitana.className,
+                    inter.className,
                     "flex text-xl md:text-2xl flex-wrap"
                 )}
             >
@@ -43,7 +43,11 @@ export default function Breadcrumbs({
                                 : "text-gray-500"
                         )}
                     >
-                        <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+                        <Link href={breadcrumb.href}>
+                            <h1 className="leading-tight tracking-tighter">
+                                {breadcrumb.label}
+                            </h1>
+                        </Link>
                         {index < breadcrumbs.length - 1 ? (
                             <span className="mx-3 inline-block">/</span>
                         ) : null}

@@ -1,4 +1,4 @@
-import { lusitana } from "@/app/fonts";
+import { inter } from "@/app/fonts";
 import { CardsSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import SampleExercises from "@/app/ui/dashboard/exercises/sample-exercises";
@@ -10,12 +10,12 @@ export const metadata: Metadata = {
     title: "Dashboard",
 };
 
-export default function Page() {
+export default async function Page() {
     return (
         <main>
             <div className="mb-5">
                 <h1
-                    className={`${lusitana.className} mb-4 text-xl md:text-2xl`}
+                    className={`${inter.className} font-medium leading-tight tracking-tighter mb-4 text-xl md:text-2xl`}
                 >
                     Sample exercises
                 </h1>
@@ -25,7 +25,7 @@ export default function Page() {
             </div>
             <div className="mb-5">
                 <h1
-                    className={`${lusitana.className} mb-4 text-xl md:text-2xl`}
+                    className={`${inter.className} font-medium leading-tight tracking-tighter mb-4 text-xl md:text-2xl`}
                 >
                     By target
                 </h1>
@@ -35,7 +35,7 @@ export default function Page() {
             </div>
             <div className="mb-5">
                 <h1
-                    className={`${lusitana.className} mb-4 text-xl md:text-2xl`}
+                    className={`${inter.className} font-medium leading-tight tracking-tighter mb-4 text-xl md:text-2xl`}
                 >
                     By equipment
                 </h1>

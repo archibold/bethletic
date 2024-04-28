@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { lusitana } from "@/app/fonts";
+import { inter } from "@/app/fonts";
 import TargetExercises from "@/app/ui/dashboard/target/target-exercises";
 import { CategoriesSkeleton } from "@/app/ui/skeletons";
 import { Metadata } from "next";
@@ -11,7 +11,9 @@ export const metadata: Metadata = {
 export default function Page() {
     return (
         <main>
-            <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+            <h1
+                className={`${inter.className} font-medium leading-tight tracking-tighter mb-4 text-xl md:text-2xl`}
+            >
                 By target
             </h1>
             <Suspense fallback={<CategoriesSkeleton />}>
