@@ -46,6 +46,24 @@ export async function fetchExampleExerciseByTarget() {
     }
 }
 
+export async function fetchExerciseByQuery(search: string) {
+    try {
+        if (search !== "") {
+            const data = await sql<Exercise>`
+            SELECT *
+            FROM exercise
+            WHERE to_tsvector('english', name || ' ' || body_part || ' ' || equipment || ' ' || target || ' ' || secondary_muscles::text) @@ plainto_tsquery(${search
+                .split(" ")
+                .join("+")})`;
+            const exampleExercises: Array<Exercise> = data.rows;
+            return exampleExercises;
+        }
+        return [];
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch example exercises.");
+    }
+}
 export async function fetchExampleExerciseByEquipment() {
     try {
         type ExercisWithEquipment = Exercise & {

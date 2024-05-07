@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Page({ params }: { params: { name: string } }) {
     const name = decodeURI(params.name);
-
+    console.log(name);
     return (
         <main>
             <Breadcrumbs
