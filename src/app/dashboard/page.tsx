@@ -1,16 +1,16 @@
 import { inter } from "@/app/fonts";
 import { CardsSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
-import SampleExercises from "@/app/ui/dashboard/exercises/sample-exercises";
-import TargetRandomExercises from "@/app/ui/dashboard/exercises/random-target";
-import EquipmentRandomExercises from "@/app/ui/dashboard/exercises/random-equipment";
+// import SampleExercises from "@/app/ui/dashboard/exercises/sample-exercises";
+// import TargetRandomExercises from "@/app/ui/dashboard/exercises/random-target";
+// import EquipmentRandomExercises from "@/app/ui/dashboard/exercises/random-equipment";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Dashboard",
 };
 
-export default async function Page() {
+export default async function Page({ params }: { params: { search: string } }) {
     return (
         <main>
             <div className="mb-5">
@@ -19,9 +19,9 @@ export default async function Page() {
                 >
                     Sample exercises
                 </h1>
-                <Suspense fallback={<CardsSkeleton />}>
+                {/* <Suspense fallback={<CardsSkeleton />}>
                     <SampleExercises />
-                </Suspense>
+                </Suspense> */}
             </div>
             <div className="mb-5">
                 <h1
@@ -29,9 +29,9 @@ export default async function Page() {
                 >
                     By target
                 </h1>
-                <Suspense fallback={<CardsSkeleton />}>
+                {/* <Suspense fallback={<CardsSkeleton />}>
                     <TargetRandomExercises />
-                </Suspense>
+                </Suspense> */}
             </div>
             <div className="mb-5">
                 <h1
@@ -39,9 +39,9 @@ export default async function Page() {
                 >
                     By equipment
                 </h1>
-                <Suspense fallback={<CardsSkeleton />}>
+                {/* <Suspense fallback={<CardsSkeleton />}>
                     <EquipmentRandomExercises />
-                </Suspense>
+                </Suspense> */}
             </div>
         </main>
     );

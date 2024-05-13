@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/app/ui/dashboard/breadcrumbs";
-import TargetByName from "@/app/ui/dashboard/target/target-by-name";
+// import TargetByName from "@/app/ui/dashboard/target/target-by-name";
 import { Suspense } from "react";
 import { CardsSkeleton } from "@/app/ui/skeletons";
 import { Metadata } from "next";
@@ -25,9 +25,9 @@ export default function Page({ params }: { params: { name: string } }) {
                     },
                 ]}
             />
-            <Suspense fallback={<CardsSkeleton />}>
+            {/* <Suspense fallback={<CardsSkeleton />}>
                 <TargetByName name={name} />
-            </Suspense>
+            </Suspense> */}
         </main>
     );
 }
