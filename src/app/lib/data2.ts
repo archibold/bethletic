@@ -60,6 +60,7 @@ export async function fetchEquipmentCategories() {
                 equipment: "asc",
             },
         });
+        console.log(fetchedEquipmentCategories);
         return fetchedEquipmentCategories;
     } catch (error) {
         console.error("Database Error:", error);
