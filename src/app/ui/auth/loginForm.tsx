@@ -12,6 +12,7 @@ export default function LoginForm() {
     return (
         <form action={dispatch}>
             <div className="border-2 border-black flex flex-col p-10 gap-5 justify-end">
+                {errorMessage}
                 <Input autoFocus name="email" placeholder="type email... " />
                 <Input
                     name="password"
