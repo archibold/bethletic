@@ -16,7 +16,7 @@ model customers {
 }
 
 model exercise {
-  id                Int      @id @default(autoincrement()) @map("_id")
+  id                String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   body_part         String?
   equipment         String?
   gif_url           String?
@@ -25,7 +25,19 @@ model exercise {
   target            String?
   secondary_muscles String[]
   instructions      String[]
-  @@unique(name: "naruto", [name, target])
+  user user_exercise[]
+}
+
+model exec_copy {
+  body_part         String?
+  equipment         String?
+  gif_url           String?
+  api_id            String?
+  name              String?
+  target            String?
+  secondary_muscles String[]
+  instructions      String[]
+  id                String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
 }
 
 model invoices {
@@ -46,4 +58,16 @@ model users {
   name     String @db.VarChar(255)
   email    String @unique
   password String
+  exercise user_exercise[]
+}
+
+model user_exercise {
+  user       users     @relation(fields: [user_id], references: [id])
+  user_id     String @db.Uuid// relation scalar field (used in the `@relation` attribute above)
+  exercise   exercise @relation(fields: [exercise_id], references: [id])
+  exercise_id String @db.Uuid// relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([user_id, exercise_id])
 }
