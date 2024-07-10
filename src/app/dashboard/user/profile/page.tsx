@@ -1,4 +1,5 @@
 import { auth } from "../../../../auth";
+import Button from "../../../ui/basic/button";
 import Input from "../../../ui/basic/input";
 
 export default async function Page() {
@@ -10,6 +11,10 @@ export default async function Page() {
                 <p className="col-span-2"> {session?.user?.name}</p>
                 <h3>Email</h3>
                 <p className="col-span-2"> {session?.user?.email}</p>
+            </div>
+            <div>
+                <Button onClick={() => {}}>Change your info</Button>
+                <Button warning>Delete Account</Button>
             </div>
         </div>
     );
