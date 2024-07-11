@@ -1,7 +1,7 @@
-import { CardExercise, fetchExerciseByQuery } from "@/app/lib/data2";
-import Card from "@/app/ui/dashboard/card";
-import { GetServerSideProps, GetStaticProps } from "next";
-import { exercise } from "@prisma/client";
+import { CardExercise, fetchExerciseByQuery } from "@/lib/data2";
+import Card from "@/components/dashboard/card";
+// import { GetServerSideProps, GetStaticProps } from "next";
+// import { exercise } from "@prisma/client";
 
 export default async function Exercises({ search }: { search: string }) {
     let exercises: CardExercise[] = await fetchExerciseByQuery(search);

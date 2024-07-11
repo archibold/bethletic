@@ -1,4 +1,4 @@
-import UserNav from "../../ui/user/UserNav";
+import UserNav from "@/components/user/UserNav";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (

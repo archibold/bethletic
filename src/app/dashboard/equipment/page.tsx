@@ -1,7 +1,7 @@
 import { inter } from "@/app/fonts";
-import EquipmentExercises from "@/app/ui/dashboard/equipment/equipment-exercises";
+import EquipmentExercises from "@/components/dashboard/equipment/equipment-exercises";
 import { Suspense } from "react";
-import { CategoriesSkeleton } from "@/app/ui/skeletons";
+import { CategoriesSkeleton } from "@/components/skeletons";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

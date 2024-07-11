@@ -1,5 +1,5 @@
-import CategoryCard from "@/app/ui/dashboard/categoryCard";
-import { fetchEquipmentCategories } from "../../../lib/data2";
+import CategoryCard from "@/components/dashboard/categoryCard";
+import { fetchEquipmentCategories } from "@/lib/data2";
 
 export default async function EquipmentCategory() {
     const categories = await fetchEquipmentCategories();

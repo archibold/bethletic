@@ -1,14 +1,17 @@
 import { inter } from "@/app/fonts";
-import { CardsSkeleton } from "@/app/ui/skeletons";
-import { Suspense } from "react";
+// import { CardsSkeleton } from "@/components/skeletons";
+// import { Suspense } from "react";
 // import SampleExercises from "@/app/ui/dashboard/exercises/sample-exercises";
 // import TargetRandomExercises from "@/app/ui/dashboard/exercises/random-target";
 // import EquipmentRandomExercises from "@/app/ui/dashboard/exercises/random-equipment";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: "Dashboard",
-};
+// No need Meta because of Auth access
+
+// import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//     title: "Dashboard",
+// };
 
 export default async function Page({ params }: { params: { search: string } }) {
     return (

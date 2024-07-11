@@ -2,8 +2,8 @@ import { inter } from "@/app/fonts";
 import Image from "next/image";
 import Tag from "./tag";
 import Link from "next/link";
-import { getSmallImageUrl } from "@/app/lib/utils";
-import { CardExercise } from "../../lib/data2";
+import { getSmallImageUrl } from "@/lib/utils";
+import { CardExercise } from "@/lib/data2";
 
 export default function Card({
     exercise,

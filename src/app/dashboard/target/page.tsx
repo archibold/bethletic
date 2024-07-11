@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import { inter } from "@/app/fonts";
-import TargetExercises from "@/app/ui/dashboard/target/target-exercises";
-import { CategoriesSkeleton } from "@/app/ui/skeletons";
+import TargetExercises from "@/components/dashboard/target/target-exercises";
+import { CategoriesSkeleton } from "@/components/skeletons";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: "By target",
-};
+// export const metadata: Metadata = {
+//     title: "By target",
+// };
 
 export default function Page() {
     return (

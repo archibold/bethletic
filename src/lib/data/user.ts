@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
-import { User } from "../definitions";
-import { auth } from "../../../auth";
+import { User } from "@/lib/definitions";
+import { auth } from "@/auth";
 
 export async function getUserData() {
     const session = await auth();

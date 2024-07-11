@@ -1,7 +1,7 @@
-import Breadcrumbs from "@/app/ui/dashboard/breadcrumbs";
+import Breadcrumbs from "@/components/dashboard/breadcrumbs";
 // import EquipmenyByName from "@/app/ui/dashboard/equipment/equipment-by-name";
-import { Suspense } from "react";
-import { CardsSkeleton } from "@/app/ui/skeletons";
+// import { Suspense } from "react";
+// import { CardsSkeleton } from "@/components/skeletons";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

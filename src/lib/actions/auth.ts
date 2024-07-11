@@ -6,6 +6,7 @@ import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
+import { ValidateUser } from "@/lib/validationSchema";
 
 export async function authenticate(
     prevState: string | undefined,
@@ -26,20 +27,11 @@ export async function authenticate(
     }
 }
 
-const RegisterUser = z.object({
-    name: z.string({
-        invalid_type_error: "Please enter your name.",
-    }),
-    email: z
-        .string({
-            invalid_type_error: "Please enter an email address.",
-        })
-        .email({ message: "Please enter valid email address" }),
-    password: z
-        .string({
-            invalid_type_error: "Please enter a password.",
-        })
-        .min(6),
+const RegisterUser = ValidateUser.pick({
+    name: true,
+    email: true,
+    password: true,
+}).extend({
     confirmPassword: z.string({
         invalid_type_error: "Please confirm your password.",
     }),

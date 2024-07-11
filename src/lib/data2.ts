@@ -1,4 +1,4 @@
-import prisma from "./prisma";
+import prisma from "@/lib/prisma";
 import { exercise } from "@prisma/client";
 
 export type CardExercise = Omit<

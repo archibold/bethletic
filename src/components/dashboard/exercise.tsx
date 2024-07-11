@@ -3,7 +3,7 @@ import Tag from "./tag";
 import Image from "next/image";
 // import { fetchExercise } from "@/app/lib/data";
 import { notFound } from "next/navigation";
-import { fetchExercise } from "../../lib/data2";
+import { fetchExercise } from "@/lib/data2";
 
 export default async function Exercise({ id }: { id: string }) {
     const exercise = await fetchExercise(id);
