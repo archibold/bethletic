@@ -4,6 +4,26 @@ import { auth, unstable_update } from "@/auth";
 import prisma from "@/lib/prisma";
 import { ValidateUser } from "@/lib/validationSchema";
 
+export async function getUserByEmail(email: string) {
+    try {
+        const user = await prisma.users.findUnique({ where: { email } });
+
+        return user;
+    } catch {
+        return null;
+    }
+}
+
+export async function getUserById(id: string) {
+    try {
+        const user = await prisma.users.findUnique({ where: { id } });
+
+        return user;
+    } catch {
+        return null;
+    }
+}
+
 export async function changeUserInfo(
     prevState: string | undefined,
     formData: FormData
@@ -44,6 +64,7 @@ export async function changeUserInfo(
 
         const transaction = await prisma.$transaction([updateUser]);
         console.log(transaction);
+        // update();
         unstable_update({ user: { email, name } });
     } catch (error) {
         console.error("Database Error:", error);

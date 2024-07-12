@@ -7,13 +7,18 @@ import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import { ValidateUser } from "@/lib/validationSchema";
+import { getUserByEmail } from "./user";
 
 export async function authenticate(
     prevState: string | undefined,
     formData: FormData
 ) {
     try {
-        await signIn("credentials", formData);
+        await signIn("credentials", {
+            email: formData.get("email"),
+            password: formData.get("password"),
+            redirectTo: "/dashboard",
+        });
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -67,6 +72,10 @@ export async function register(
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const id = uuidv4();
+
+    if (await getUserByEmail(email)) {
+        return "User already exists";
+    }
 
     try {
         await sql`

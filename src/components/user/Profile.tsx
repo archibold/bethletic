@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/basic/button";
 import Input from "@/components/basic/input";
 import { useFormState, useFormStatus } from "react-dom";
 import { changeUserInfo } from "@/lib/actions/user";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useSession } from "next-auth/react";
 
 export default function UserProfile({
@@ -14,15 +15,20 @@ export default function UserProfile({
     name: string;
     email: string;
 }) {
-    const { update } = useSession();
+    const user = useCurrentUser();
+    // const user = session.data?.user;
     const [isEditable, setIsEditable] = useState(false);
+    const { data: session, update } = useSession();
     const { pending } = useFormStatus();
     const [errorMessage, dispatch] = useFormState(changeUserInfo, undefined);
+    useEffect(() => {
+        console.log("something changed");
+    }, [session]);
 
-    const onSave = () => {
-        // setIsEditable(false);
-        update();
-    };
+    // const onSave = () => {
+    //     // setIsEditable(false);
+    //     update();
+    // };
     return (
         <div>
             <div className="grid lg:grid-cols-3 gap-2">
@@ -30,7 +36,7 @@ export default function UserProfile({
                     <h3>Name</h3>
                     <div className="col-span-2">
                         {!isEditable ? (
-                            <p className="p-1"> {name}</p>
+                            <p className="p-1"> {user?.name}</p>
                         ) : (
                             <Input name="name" defaultValue={name} />
                         )}
@@ -39,7 +45,7 @@ export default function UserProfile({
                     <h3>Email</h3>
                     <div className="col-span-2">
                         {!isEditable ? (
-                            <p className="p-1"> {email}</p>
+                            <p className="p-1"> {user?.email}</p>
                         ) : (
                             <Input name="email" defaultValue={email} />
                         )}
@@ -54,9 +60,7 @@ export default function UserProfile({
                             Change your info
                         </Button>
                     ) : (
-                        <Button type="submit" onClick={onSave}>
-                            Save
-                        </Button>
+                        <Button type="submit">Save</Button>
                     )}
                 </form>
             </div>

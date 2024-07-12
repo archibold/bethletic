@@ -5,6 +5,8 @@ import { sql } from "@vercel/postgres";
 import type { User } from "@/lib/definitions";
 import bcrypt from "bcrypt";
 import { ValidateUser } from "@/lib/validationSchema";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import prisma from "./lib/prisma";
 
 async function getUser(email: string): Promise<User | undefined> {
     try {
@@ -16,7 +18,9 @@ async function getUser(email: string): Promise<User | undefined> {
     }
 }
 
-export const { auth, signIn, signOut, unstable_update } = NextAuth({
+export const { auth, signIn, signOut, handlers, unstable_update } = NextAuth({
+    adapter: PrismaAdapter(prisma),
+    session: { strategy: "jwt" },
     ...authConfig,
     providers: [
         Credentials({
