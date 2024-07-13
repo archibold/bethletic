@@ -16,14 +16,14 @@ export default async function Exercise({ id }: { id: string }) {
         <>
             <div className="text-gray-500">
                 <p>
-                    {exercise.secondary_muscles.map((muscle, index) => {
+                    {/* {exercise.secondary_muscles.map((muscle, index) => {
                         return (
                             muscle +
                             (index + 1 != exercise.secondary_muscles.length
                                 ? ", "
                                 : "")
                         );
-                    })}
+                    })} */}
                 </p>
             </div>
             <div className="w-full grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 rounded-xl bg-gray-50 p-4 md:flex-row">
@@ -44,11 +44,11 @@ export default async function Exercise({ id }: { id: string }) {
                 </div>
 
                 <ol className={`${inter.className} list-decimal lg:col-span-2`}>
-                    {exercise.instructions.map((step) => (
+                    {/* {exercise.instructions.map((step) => (
                         <li className="py-2 ml-7 max-w-[600px]" key={step}>
                             <p className="leading-snug">{step}</p>
                         </li>
-                    ))}
+                    ))} */}
                 </ol>
             </div>
         </>

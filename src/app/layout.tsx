@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { inter } from "@/app/fonts";
 import "./globals.css";
+import AuthWrapper from "./auth_wrapper";
 
 export const metadata: Metadata = {
     title: {
@@ -19,7 +20,9 @@ export default function RootLayout({
 }>) {
     return (
         <html className="overscroll-none" lang="en">
-            <body className={inter.className}>{children}</body>
+            <AuthWrapper>
+                <body className={inter.className}>{children}</body>
+            </AuthWrapper>
         </html>
     );
 }

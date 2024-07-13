@@ -1,57 +1,44 @@
+import bcrypt from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+// import Github from "next-auth/providers/github";
+// import Google from "next-auth/providers/google";
 
-export const authConfig = {
-    pages: {
-        signIn: "/login",
-    },
-    callbacks: {
-        authorized({ auth, request: { nextUrl } }) {
-            const isLoggedIn = !!auth?.user;
-            const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
-            if (isOnDashboard) {
-                if (isLoggedIn) return true;
-                return false; // Redirect unauthenticated users to login page
-            } else if (isLoggedIn) {
-                return Response.redirect(new URL("/dashboard", nextUrl));
-            }
-            return true;
-        },
-        session: async ({ session, token, trigger }) => {
-            if (session?.user) {
-                console.log("----");
+import { LoginSchema } from "@/schemas";
+import { getUserByEmail } from "@/data/user";
 
-                console.log(token);
-                console.log("----");
-                session.user.id = token.sub || "";
-                session.user.name = token.name;
-                session.user.email = token.email || "";
-            }
+export default {
+    providers: [
+        // Google({
+        //     clientId: process.env.GOOGLE_CLIENT_ID,
+        //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        // }),
+        // Github({
+        //     clientId: process.env.GITHUB_CLIENT_ID,
+        //     clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        // }),
+        Credentials({
+            async authorize(credentials) {
+                const parsedCredentials = LoginSchema.pick({
+                    email: true,
+                    password: true,
+                }).safeParse(credentials);
 
-            console.log("MARYJKO");
-            if (trigger === "update") {
-                console.log("ZORDON ZGŁoś się");
-            }
-            console.log(session);
-            console.log("MARYJKO");
-            return session;
-        },
-        jwt({ token, user, session, trigger }) {
-            if (trigger === "update") {
-                console.log("ZORDON ZGŁoś się 0077");
-                token.name = session.user.name;
-                token.email = session.user.email;
-            }
-            // What comes in `session` here is what's updated in the server action
-            if (session?.user?.name) {
-                token.name = session.user.name;
-            }
+                if (parsedCredentials.success) {
+                    const { email, password } = parsedCredentials.data;
+                    const user = await getUserByEmail(email);
+                    if (!user) return null;
+                    const passwordsMatch = await bcrypt.compare(
+                        password,
+                        user.password
+                    );
 
-            if (user?.id) {
-                token.id = user.id;
-            }
+                    if (passwordsMatch) return user;
+                }
 
-            return token;
-        },
-    },
-    providers: [], // Add providers with an empty array for now
+                console.log("Invalid credentials");
+                return null;
+            },
+        }),
+    ],
 } satisfies NextAuthConfig;

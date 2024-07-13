@@ -44,7 +44,7 @@ export default function LoginForm() {
                 <Button disabled={pending}>Google</Button>
                 <Button disabled={pending}>Facebook</Button>
             </div>
-            <Link className="text-right" href="/login">
+            <Link className="text-right" href="/auth/login">
                 <small>back to login page</small>
             </Link>
         </div>

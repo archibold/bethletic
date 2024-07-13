@@ -1,14 +1,12 @@
 "use server";
-import { z } from "zod";
-import { sql } from "@vercel/postgres";
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
-import { ValidateUser } from "@/lib/validationSchema";
+import { RegisterSchema } from "@/schemas";
 import { getUserByEmail } from "./user";
-
+import prisma from "../prisma";
 export async function authenticate(
     prevState: string | undefined,
     formData: FormData
@@ -32,21 +30,11 @@ export async function authenticate(
     }
 }
 
-const RegisterUser = ValidateUser.pick({
-    name: true,
-    email: true,
-    password: true,
-}).extend({
-    confirmPassword: z.string({
-        invalid_type_error: "Please confirm your password.",
-    }),
-});
-
 export async function register(
     prevState: string | undefined,
     formData: FormData
 ) {
-    const validatedFields = RegisterUser.safeParse({
+    const validatedFields = RegisterSchema.safeParse({
         name: formData.get("name"),
         email: formData.get("email"),
         password: formData.get("password"),
@@ -68,23 +56,31 @@ export async function register(
         return "Passwords don't match.";
     }
 
-    console.log(password);
+    const existingUser = await getUserByEmail(email);
+
+    if (existingUser) {
+        return { error: "Email already in use!" };
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const id = uuidv4();
 
-    if (await getUserByEmail(email)) {
-        return "User already exists";
-    }
+    await prisma.user.create({
+        data: {
+            id,
+            name,
+            email,
+            password: hashedPassword,
+        },
+    });
 
-    try {
-        await sql`
-      INSERT INTO users (id, name, email, password)
-      VALUES (${id}, ${name}, ${email}, ${hashedPassword})
-    `;
-    } catch (error) {
-        return "Database Error: Failed to Create Account.";
-    }
+    // const verificationToken = await generateVerificationToken(email);
+    // await sendVerificationEmail(
+    //     verificationToken.email,
+    //     verificationToken.token
+    // );
 
     redirect("/auth/login");
+
+    return { success: "Confirmation email sent!" };
 }

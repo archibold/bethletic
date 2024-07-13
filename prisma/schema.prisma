@@ -1,21 +1,91 @@
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+}
+
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+enum UserRole {
+  ADMIN
+  USER
 }
 
-model customers {
-  id        String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name      String @db.VarChar(255)
-  email     String @db.VarChar(255)
-  image_url String @db.VarChar(255)
+model User {
+  id            String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          UserRole @default(USER)
+  accounts      Account[]
+  isTwoFactorEnabled Boolean @default(false)
+  twoFactorConfirmation TwoFactorConfirmation?
+  exercise User_exercise[]
 }
 
-model exercise {
+model Account {
+  id                 String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model VerificationToken {
+  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorToken {
+  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorConfirmation {
+  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+}
+
+
+model Exercise {
   id                String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   body_part         String?
   equipment         String?
@@ -25,7 +95,7 @@ model exercise {
   target            String?
   secondary_muscles String[]
   instructions      String[]
-  user user_exercise[]
+  user User_exercise[]
 }
 
 model exec_copy {
@@ -40,31 +110,10 @@ model exec_copy {
   id                String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
 }
 
-model invoices {
-  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  customer_id String   @db.Uuid
-  amount      Int
-  status      String   @db.VarChar(255)
-  date        DateTime @db.Date
-}
-
-model revenue {
-  month   String @unique @db.VarChar(4)
-  revenue Int
-}
-
-model users {
-  id       String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name     String @db.VarChar(255)
-  email    String @unique
-  password String
-  exercise user_exercise[]
-}
-
-model user_exercise {
-  user       users     @relation(fields: [user_id], references: [id])
-  user_id     String @db.Uuid// relation scalar field (used in the `@relation` attribute above)
-  exercise   exercise @relation(fields: [exercise_id], references: [id])
+model User_exercise {
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id     String @db.Uuid // relation scalar field (used in the `@relation` attribute above)
+  exercise   Exercise @relation(fields: [exercise_id], references: [id])
   exercise_id String @db.Uuid// relation scalar field (used in the `@relation` attribute above)
   assignedAt DateTime @default(now())
   assignedBy String

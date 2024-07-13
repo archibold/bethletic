@@ -2,12 +2,12 @@
 
 import { auth, unstable_update } from "@/auth";
 import prisma from "@/lib/prisma";
-import { ValidateUser } from "@/lib/validationSchema";
+import { UserScheme } from "@/lib/validationSchema";
+import { revalidatePath } from "next/cache";
 
 export async function getUserByEmail(email: string) {
     try {
-        const user = await prisma.users.findUnique({ where: { email } });
-
+        const user = await prisma.user.findUnique({ where: { email } });
         return user;
     } catch {
         return null;
@@ -16,8 +16,7 @@ export async function getUserByEmail(email: string) {
 
 export async function getUserById(id: string) {
     try {
-        const user = await prisma.users.findUnique({ where: { id } });
-
+        const user = await prisma.user.findUnique({ where: { id } });
         return user;
     } catch {
         return null;
@@ -29,7 +28,7 @@ export async function changeUserInfo(
     formData: FormData
 ) {
     try {
-        const validatedFields = ValidateUser.pick({
+        const validatedFields = UserScheme.pick({
             name: true,
             email: true,
         }).safeParse({
@@ -50,7 +49,7 @@ export async function changeUserInfo(
 
         const { name, email } = validatedFields.data;
 
-        const updateUser = prisma.users.update({
+        const updateUser = prisma.user.update({
             where: {
                 email: email,
             },
@@ -60,12 +59,11 @@ export async function changeUserInfo(
             },
         });
 
-        console.log(updateUser);
-
         const transaction = await prisma.$transaction([updateUser]);
-        console.log(transaction);
-        // update();
+        console.log("blablaj");
         unstable_update({ user: { email, name } });
+
+        return true;
     } catch (error) {
         console.error("Database Error:", error);
         return "Update Error";

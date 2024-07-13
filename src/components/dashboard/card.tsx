@@ -47,14 +47,14 @@ export default function Card({
             </h2>
             <div className="m-3 mt-0 text-gray-500">
                 <p>
-                    {exercise.secondary_muscles.map((muscle, index) => {
+                    {/* {exercise.secondary_muscles.map((muscle, index) => {
                         return (
                             muscle +
                             (index + 1 != exercise.secondary_muscles.length
                                 ? ", "
                                 : "")
                         );
-                    })}
+                    })} */}
                 </p>
             </div>
         </div>
