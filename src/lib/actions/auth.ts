@@ -1,6 +1,5 @@
 "use server";
 import { z } from "zod";
-import { sql } from "@vercel/postgres";
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
@@ -8,6 +7,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import { ValidateUser } from "@/lib/validationSchema";
 import { getUserByEmail } from "./user";
+import prisma from "../prisma";
 
 export async function authenticate(
     prevState: string | undefined,
@@ -20,6 +20,7 @@ export async function authenticate(
             redirectTo: "/dashboard",
         });
     } catch (error) {
+        console.log(error);
         if (error instanceof AuthError) {
             switch (error.type) {
                 case "CredentialsSignin":
@@ -77,14 +78,14 @@ export async function register(
         return "User already exists";
     }
 
-    try {
-        await sql`
-      INSERT INTO users (id, name, email, password)
-      VALUES (${id}, ${name}, ${email}, ${hashedPassword})
-    `;
-    } catch (error) {
-        return "Database Error: Failed to Create Account.";
-    }
+    await prisma.user.create({
+        data: {
+            id,
+            name,
+            email,
+            password: hashedPassword,
+        },
+    });
 
-    redirect("/auth/login");
+    redirect("/login");
 }

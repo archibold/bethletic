@@ -41,7 +41,7 @@ export async function fetchExercise(id: string) {
         const fetchedExercise: exercise | null =
             await prisma.exercise.findFirst({
                 where: {
-                    id: parseInt(id),
+                    id,
                 },
             });
 

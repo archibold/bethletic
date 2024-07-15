@@ -6,7 +6,7 @@ import { ValidateUser } from "@/lib/validationSchema";
 
 export async function getUserByEmail(email: string) {
     try {
-        const user = await prisma.users.findUnique({ where: { email } });
+        const user = await prisma.user.findUnique({ where: { email } });
 
         return user;
     } catch {
@@ -16,7 +16,7 @@ export async function getUserByEmail(email: string) {
 
 export async function getUserById(id: string) {
     try {
-        const user = await prisma.users.findUnique({ where: { id } });
+        const user = await prisma.user.findUnique({ where: { id } });
 
         return user;
     } catch {
@@ -50,7 +50,7 @@ export async function changeUserInfo(
 
         const { name, email } = validatedFields.data;
 
-        const updateUser = prisma.users.update({
+        const updateUser = prisma.user.update({
             where: {
                 email: email,
             },
