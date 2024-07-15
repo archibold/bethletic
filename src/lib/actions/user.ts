@@ -1,8 +1,9 @@
 "use server";
 
-import { auth, unstable_update } from "@/auth";
+import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { ValidateUser } from "@/lib/validationSchema";
+import { revalidatePath } from "next/cache";
 
 export async function getUserByEmail(email: string) {
     try {
@@ -24,8 +25,12 @@ export async function getUserById(id: string) {
     }
 }
 
+type UserProfileFormState = {
+    success: boolean;
+    errorMessage?: string | undefined;
+};
 export async function changeUserInfo(
-    prevState: string | undefined,
+    prevState: UserProfileFormState,
     formData: FormData
 ) {
     try {
@@ -60,14 +65,11 @@ export async function changeUserInfo(
             },
         });
 
-        console.log(updateUser);
-
         const transaction = await prisma.$transaction([updateUser]);
-        console.log(transaction);
-        // update();
-        unstable_update({ user: { email, name } });
+        revalidatePath("/user/profile");
+        return { success: true };
     } catch (error) {
         console.error("Database Error:", error);
-        return "Update Error";
+        return { success: false, errorMessage: "Update Error" };
     }
 }
