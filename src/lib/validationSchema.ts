@@ -14,7 +14,4 @@ export const ValidateUser = z.object({
             invalid_type_error: "Please enter a password.",
         })
         .min(6),
-    // confirmPassword: z.string({
-    //     invalid_type_error: "Please confirm your password.",
-    // }),
 });
