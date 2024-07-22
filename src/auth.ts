@@ -5,22 +5,34 @@ import bcrypt from "bcrypt";
 import { ValidateUser } from "@/lib/validationSchema";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "./lib/prisma";
-import { getUserByEmail } from "./lib/actions/user";
+import { getUserByEmail, getUserById } from "./lib/actions/user";
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
     adapter: PrismaAdapter(prisma),
     session: { strategy: "jwt" },
     ...authConfig,
     callbacks: {
-        authorized({ auth, request: { nextUrl } }) {
-            const isLoggedIn = !!auth?.user;
-            const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
-            if (isOnDashboard) {
-                if (isLoggedIn) return true;
-                return false; // Redirect unauthenticated users to login page
-            } else if (isLoggedIn) {
-                return Response.redirect(new URL("/dashboard", nextUrl));
-            }
+        async signIn({ user, account }) {
+            // Allow OAuth without email verification
+            if (account?.provider !== "credentials") return true;
+
+            const existingUser = await getUserById(user.id || "");
+
+            // Prevent sign in without email verification
+            // if (!existingUser?.emailVerified) return false;
+
+            // if (existingUser.isTwoFactorEnabled) {
+            //     const twoFactorConfirmation =
+            //         await getTwoFactorConfirmationByUserId(existingUser.id);
+
+            //     if (!twoFactorConfirmation) return false;
+
+            //     // Delete two factor confirmation for next sign in
+            //     await db.twoFactorConfirmation.delete({
+            //         where: { id: twoFactorConfirmation.id },
+            //     });
+            // }
+
             return true;
         },
         session: async ({ session, token, trigger }) => {

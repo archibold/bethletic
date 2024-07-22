@@ -8,15 +8,55 @@ import { v4 as uuidv4 } from "uuid";
 import { ValidateUser } from "@/lib/validationSchema";
 import { getUserByEmail } from "./user";
 import prisma from "../prisma";
+import { generateVerificationToken } from "../verification/tokens";
+import { sendVerificationEmail } from "../verification/mail";
+
+const LoginUser = ValidateUser.pick({
+    email: true,
+    password: true,
+});
 
 export async function authenticate(
     prevState: string | undefined,
     formData: FormData
 ) {
+    const validatedFields = LoginUser.safeParse({
+        email: formData.get("email"),
+        password: formData.get("password"),
+    });
+    console.log(validatedFields.error);
+    if (!validatedFields.success) {
+        // TODO; Change to OBJ {success, error}
+        // return { error: "Invalid fields!" };
+        return "Invalid fields!";
+    }
+
+    const { email, password } = validatedFields.data;
+
+    const existingUser = await getUserByEmail(email);
+
+    if (!existingUser || !existingUser.email || !existingUser.password) {
+        return "Email does not exist!";
+    }
+
+    if (!existingUser.emailVerified) {
+        const verificationToken = await generateVerificationToken(
+            existingUser.email
+        );
+
+        await sendVerificationEmail(
+            verificationToken.email,
+            verificationToken.token
+        );
+
+        // return { success: "Confirmation email sent!" };
+        return "Confirmation email sent!";
+    }
+
     try {
         await signIn("credentials", {
-            email: formData.get("email"),
-            password: formData.get("password"),
+            email,
+            password,
             redirectTo: "/dashboard",
         });
     } catch (error) {
