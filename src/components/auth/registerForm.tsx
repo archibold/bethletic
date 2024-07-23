@@ -3,18 +3,18 @@
 import Input from "@/components/basic/input";
 import Button from "@/components/basic/button";
 import Link from "next/link";
-import { useFormState, useFormStatus } from "react-dom";
-import { register } from "@/lib/actions/auth";
+import { useFormState } from "react-dom";
+import { register } from "@/lib/actions/auth/registerForm";
+import FormMessage from "@/components/basic/formMessage";
 
-export default function LoginForm() {
-    const { pending } = useFormStatus();
-    const [errorMessage, dispatch] = useFormState(register, undefined);
+export default function RegisterForm() {
+    const [message, dispatch] = useFormState(register, undefined);
 
     return (
         <div className="border-2 border-black flex flex-col p-10 gap-5 justify-end">
             <form action={dispatch}>
                 <div className="flex flex-col gap-5">
-                    <div className="whitespace-pre-line">{errorMessage}</div>
+                    <FormMessage message={message} />
                     <Input
                         autoFocus
                         name="name"
@@ -35,14 +35,12 @@ export default function LoginForm() {
                         placeholder="type the same password"
                         type="password"
                     />
-                    <button disabled={pending} className="text-right">
-                        Register
-                    </button>
+                    <Button className="text-right">Register</Button>
                 </div>
             </form>
             <div className="flex gap-5 justify-between">
-                <Button disabled={pending}>Google</Button>
-                <Button disabled={pending}>Facebook</Button>
+                <Button>Google</Button>
+                <Button>Facebook</Button>
             </div>
             <Link className="text-right" href="/login">
                 <small>back to login page</small>
