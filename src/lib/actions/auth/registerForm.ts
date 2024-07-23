@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import { ValidateUser } from "@/lib/validationSchema";
 import { getUserByEmail } from "../user";
-import prisma from "../../prisma";
+import prisma from "@/lib/prisma";
 
 const RegisterUser = ValidateUser.pick({
     name: true,

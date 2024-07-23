@@ -4,8 +4,8 @@ import * as z from "zod";
 import bcrypt from "bcrypt";
 import prisma from "@/lib/prisma";
 import { getUserByEmail } from "../user";
-import { getPasswordResetTokenByToken } from "../../verification/password-reset-token";
-import { ValidateUser } from "../../validationSchema";
+import { getPasswordResetTokenByToken } from "@/lib/verification/password-reset-token";
+import { ValidateUser } from "@/lib/validationSchema";
 
 const PasswordScheme = ValidateUser.pick({
     password: true,

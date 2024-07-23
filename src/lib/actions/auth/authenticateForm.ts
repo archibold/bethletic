@@ -3,8 +3,8 @@ import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { ValidateUser } from "@/lib/validationSchema";
 import { getUserByEmail } from "../user";
-import { generateVerificationToken } from "../../verification/tokens";
-import { sendVerificationEmail } from "../../verification/mail";
+import { generateVerificationToken } from "@/lib/verification/tokens";
+import { sendVerificationEmail } from "@/lib/verification/mail";
 
 const LoginUser = ValidateUser.pick({
     email: true,

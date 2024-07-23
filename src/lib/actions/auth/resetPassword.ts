@@ -1,9 +1,9 @@
 "use server";
 
 import { getUserByEmail } from "../user";
-import { generatePasswordResetToken } from "../../verification/tokens";
-import { sendPasswordResetEmail } from "../../verification/mail";
-import { ValidateUser } from "../../validationSchema";
+import { generatePasswordResetToken } from "@/lib/verification/tokens";
+import { sendPasswordResetEmail } from "@/lib/verification/mail";
+import { ValidateUser } from "@/lib/validationSchema";
 
 const RegisterUser = ValidateUser.pick({
     email: true,
