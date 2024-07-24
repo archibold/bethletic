@@ -2,7 +2,7 @@
 
 import { getUserByEmail } from "../user";
 import { generatePasswordResetToken } from "@/lib/verification/tokens";
-import { sendPasswordResetEmail } from "@/lib/verification/mail";
+import { sendPasswordResetEmail } from "@/lib/mail";
 import { ValidateUser } from "@/lib/validationSchema";
 
 const RegisterUser = ValidateUser.pick({

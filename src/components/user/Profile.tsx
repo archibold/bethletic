@@ -1,30 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "@/components/basic/button";
-import Input from "@/components/basic/input";
-import { useFormState, useFormStatus } from "react-dom";
-import { changeUserInfo } from "@/lib/actions/user";
+import { useFormState } from "react-dom";
+import {
+    changeName,
+    changeEmail,
+    changePassword,
+    deleteUser,
+} from "@/lib/actions/user";
+import { SimpleForm } from "./Profile/SimpleForm";
+import { SimplePasswordForm } from "./Profile/SimplePasswordForm";
+import { DeleteModal } from "./Profile/DeleteModal";
 
-function UserProfileEdit({ name, email }: { name: string; email: string }) {
-    const { pending } = useFormStatus();
-    return (
-        <>
-            <h3>Name</h3>
-            <div className="col-span-2">
-                <Input name="name" defaultValue={name} />
-            </div>
-
-            <h3>Email</h3>
-            <div className="col-span-2">
-                <Input name="email" defaultValue={email} />
-            </div>
-            <Button type="submit" disabled={pending}>
-                Save
-            </Button>
-        </>
-    );
-}
 export default function UserProfile({
     name,
     email,
@@ -32,39 +20,56 @@ export default function UserProfile({
     name: string;
     email: string;
 }) {
-    const [isEditable, setIsEditable] = useState(false);
-    const [formState, dispatch] = useFormState(changeUserInfo, {
-        success: false,
-    });
-    useEffect(() => {
-        setIsEditable(false);
-    }, [formState.success]);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [messageChangeName, dispatchChangeName] = useFormState(
+        changeName,
+        undefined
+    );
+    const [messageChangeEmail, dispatchChangeEmail] = useFormState(
+        changeEmail,
+        undefined
+    );
+    const [messageChangechangePassword, dispatchChangechangePassword] =
+        useFormState(changePassword, undefined);
+    const [messageDeleteUser, dispatchDeleteUser] = useFormState(
+        deleteUser,
+        undefined
+    );
+
     return (
         <div>
-            <div className="grid lg:grid-cols-3 gap-2">
-                {isEditable && (
-                    <form action={dispatch}>
-                        <UserProfileEdit name={name} email={email} />
-                    </form>
-                )}
-                {!isEditable && (
-                    <div>
-                        <h3>Name</h3>
-                        <div className="col-span-2">{name}</div>
-
-                        <h3>Email</h3>
-                        <div className="col-span-2">{email}</div>
-                        <Button warning>Delete Account</Button>
-                        <Button
-                            onClick={(e) => {
-                                setIsEditable(true);
-                            }}
-                        >
-                            Change your info
-                        </Button>
-                    </div>
-                )}
+            <SimpleForm
+                title="Name"
+                value={name}
+                action={dispatchChangeName}
+                message={messageChangeName}
+            />
+            <SimpleForm
+                title="Email"
+                value={email}
+                action={dispatchChangeEmail}
+                message={messageChangeEmail}
+            />
+            <SimplePasswordForm
+                action={dispatchChangechangePassword}
+                message={messageChangechangePassword}
+            />
+            <div className="grid lg:grid-cols-5">
+                <Button
+                    warning
+                    className="lg:col-start-5 grid-cols-1"
+                    onClick={() => setIsDeleteModalOpen(true)}
+                >
+                    Delete Account
+                </Button>
             </div>
+            <DeleteModal
+                isModalOpen={isDeleteModalOpen}
+                onClose={() => {
+                    setIsDeleteModalOpen(false);
+                }}
+                action={dispatchDeleteUser}
+            />
         </div>
     );
 }

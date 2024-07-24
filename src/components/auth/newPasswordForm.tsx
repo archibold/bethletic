@@ -31,7 +31,9 @@ export default function NewPasswordForm() {
                             placeholder="type the same password"
                             type="password"
                         />
-                        <Button className="text-right">Register</Button>
+                        <Button type="submit" className="text-right">
+                            Create new password
+                        </Button>
                     </div>
                 </form>
             )}

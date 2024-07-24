@@ -4,7 +4,7 @@ import { AuthError } from "next-auth";
 import { ValidateUser } from "@/lib/validationSchema";
 import { getUserByEmail } from "../user";
 import { generateVerificationToken } from "@/lib/verification/tokens";
-import { sendVerificationEmail } from "@/lib/verification/mail";
+import { sendVerificationEmail } from "@/lib/mail";
 
 const LoginUser = ValidateUser.pick({
     email: true,
@@ -19,9 +19,14 @@ export async function authenticate(
         email: formData.get("email"),
         password: formData.get("password"),
     });
-    console.log(validatedFields.error);
+
     if (!validatedFields.success) {
-        return { error: "Invalid fields!" };
+        return {
+            error: validatedFields.error.errors.reduce(
+                (acc, er) => acc + er.message + "\n",
+                ""
+            ),
+        };
     }
 
     const { email, password } = validatedFields.data;

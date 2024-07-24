@@ -6,7 +6,7 @@ import { getVerificationTokenByToken } from "@/lib/verification/verificiation-to
 
 export const newVerification = async (token: string) => {
     const existingToken = await getVerificationTokenByToken(token);
-    console.log(existingToken);
+
     if (!existingToken) {
         return { error: "Token does not exist!" };
     }
@@ -17,7 +17,8 @@ export const newVerification = async (token: string) => {
         return { error: "Token has expired!" };
     }
 
-    const existingUser = await getUserByEmail(existingToken.email);
+    const email = existingToken.oldEmail || existingToken.email;
+    const existingUser = await getUserByEmail(email);
 
     if (!existingUser) {
         return { error: "Email does not exist!" };
@@ -34,6 +35,6 @@ export const newVerification = async (token: string) => {
     await prisma.verificationToken.delete({
         where: { id: existingToken.id },
     });
-    console.log("OJEJUS");
+
     return { success: "Email verified!" };
 };

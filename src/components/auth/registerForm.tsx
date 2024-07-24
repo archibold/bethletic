@@ -35,13 +35,15 @@ export default function RegisterForm() {
                         placeholder="type the same password"
                         type="password"
                     />
-                    <Button className="text-right">Register</Button>
+                    <Button type="submit" className="text-right">
+                        Register
+                    </Button>
                 </div>
             </form>
-            <div className="flex gap-5 justify-between">
+            {/* <div className="flex gap-5 justify-between">
                 <Button>Google</Button>
                 <Button>Facebook</Button>
-            </div>
+            </div> */}
             <Link className="text-right" href="/login">
                 <small>back to login page</small>
             </Link>

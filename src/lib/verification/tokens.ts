@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import { v4 as uuidv4 } from "uuid";
 
 import prisma from "../prisma";
@@ -50,6 +49,38 @@ export const generateVerificationToken = async (email: string) => {
             email,
             token,
             expires,
+        },
+    });
+
+    return verficationToken;
+};
+
+export const generateNewEmailVerificationToken = async (
+    email: string,
+    oldEmail: string
+) => {
+    const token = uuidv4();
+    const expires = new Date(new Date().getTime() + 3600 * 1000);
+
+    const existingToken = await getVerificationTokenByEmail(email);
+
+    if (existingToken) {
+        await prisma.verificationToken.delete({
+            where: {
+                id: existingToken.id,
+            },
+        });
+    }
+
+    const id = uuidv4();
+
+    const verficationToken = await prisma.verificationToken.create({
+        data: {
+            id,
+            email,
+            token,
+            expires,
+            oldEmail,
         },
     });
 

@@ -19,7 +19,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
             const existingUser = await getUserById(user.id || "");
 
             // Prevent sign in without email verification
-            // if (!existingUser?.emailVerified) return false;
+            if (!existingUser?.emailVerified) return false;
 
             // if (existingUser.isTwoFactorEnabled) {
             //     const twoFactorConfirmation =
@@ -63,8 +63,6 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
             const existingUser = await prisma.user.findUnique({
                 where: { id: token.sub },
             });
-
-            console.log(existingUser);
 
             if (!existingUser) return token;
 

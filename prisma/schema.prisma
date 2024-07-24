@@ -119,6 +119,7 @@ model User {
 model VerificationToken {
   id      String   @id
   email   String
+  oldEmail   String?
   token   String   @unique
   expires DateTime
 

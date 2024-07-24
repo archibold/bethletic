@@ -25,13 +25,13 @@ export default function LoginForm() {
                         placeholder="type password"
                         type="password"
                     />
-                    <Button>Login</Button>
+                    <Button type="submit">Login</Button>
                 </div>
             </form>
-            <div className="flex gap-5 justify-between">
+            {/* <div className="flex gap-5 justify-between">
                 <Button>Google</Button>
                 <Button>Facebook</Button>
-            </div>
+            </div> */}
             <Link className="text-right" href="/reset">
                 <small>Forgot password?</small>
             </Link>

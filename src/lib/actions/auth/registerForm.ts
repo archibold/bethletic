@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 import { ValidateUser } from "@/lib/validationSchema";
 import { getUserByEmail } from "../user";
 import prisma from "@/lib/prisma";
+import { generateVerificationToken } from "@/lib/verification/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 const RegisterUser = ValidateUser.pick({
     name: true,
@@ -60,6 +62,13 @@ export async function register(
             password: hashedPassword,
         },
     });
+
+    const verificationToken = await generateVerificationToken(email);
+
+    await sendVerificationEmail(
+        verificationToken.email,
+        verificationToken.token
+    );
 
     redirect("/login");
 }
