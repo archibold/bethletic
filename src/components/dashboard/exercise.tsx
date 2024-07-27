@@ -4,6 +4,7 @@ import Image from "next/image";
 // import { fetchExercise } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 import { fetchExercise } from "@/lib/data2";
+import { getImageUrl } from "@/lib/utils";
 
 export default async function Exercise({ id }: { id: string }) {
     const exercise = await fetchExercise(id);
@@ -34,7 +35,7 @@ export default async function Exercise({ id }: { id: string }) {
                         </div>
                         <Image
                             alt="name"
-                            src={exercise.gif_url + ".gif"}
+                            src={getImageUrl(exercise.gif_url)}
                             className="mr-4 rounded-full"
                             unoptimized={true}
                             width={250}

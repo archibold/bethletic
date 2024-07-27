@@ -8,7 +8,7 @@ import clsx from "clsx";
 const links = [
     {
         name: "User",
-        href: "/dashboard/user",
+        href: "/dashboard/settings",
         icon: UserIcon,
     },
 ];

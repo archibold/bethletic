@@ -1,15 +1,15 @@
 import prisma from "@/lib/prisma";
-import { exercise } from "@prisma/client";
+import { exercises } from "@prisma/client";
 
-export type CardExercise = Omit<
-    exercise,
+export type CardExercises = Omit<
+    exercises,
     "instructions" | "api_id" | "body_part"
 >;
 
 export async function fetchExerciseByQuery(search: string) {
     //TODO: try catch??
     if (search === "") return [];
-    const fechedExercise: CardExercise[] = await prisma.exercise.findMany({
+    const fechedExercise: CardExercises[] = await prisma.exercises.findMany({
         where: {
             OR: [
                 { body_part: { startsWith: search, mode: "insensitive" } },
@@ -32,14 +32,16 @@ export async function fetchExerciseByQuery(search: string) {
             instructions: false,
         },
     });
+    console.log("hejo");
+    console.log(fechedExercise);
 
     return fechedExercise;
 }
 
 export async function fetchExercise(id: string) {
     try {
-        const fetchedExercise: exercise | null =
-            await prisma.exercise.findFirst({
+        const fetchedExercise: exercises | null =
+            await prisma.exercises.findFirst({
                 where: {
                     id,
                 },
@@ -54,7 +56,7 @@ export async function fetchExercise(id: string) {
 
 export async function fetchEquipmentCategories() {
     try {
-        const fetchedEquipmentCategories = await prisma.exercise.findMany({
+        const fetchedEquipmentCategories = await prisma.exercises.findMany({
             distinct: ["equipment"],
             orderBy: {
                 equipment: "asc",
@@ -70,7 +72,7 @@ export async function fetchEquipmentCategories() {
 
 export async function fetchTargetCategories() {
     try {
-        const fetchedEquipmentCategories = await prisma.exercise.findMany({
+        const fetchedEquipmentCategories = await prisma.exercises.findMany({
             distinct: ["target"],
             orderBy: {
                 target: "asc",

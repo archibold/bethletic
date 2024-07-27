@@ -15,18 +15,6 @@ model customers {
   image_url String @db.VarChar(255)
 }
 
-model exercise {
-  body_part         String?
-  equipment         String?
-  gif_url           String?
-  api_id            String?
-  name              String?
-  target            String?
-  secondary_muscles String[]
-  instructions      String[]
-  id                String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-}
-
 model exec_copy {
   body_part         String?
   equipment         String?
@@ -117,13 +105,25 @@ model User {
 }
 
 model VerificationToken {
-  id      String   @id
-  email   String
-  oldEmail   String?
-  token   String   @unique
-  expires DateTime
+  id       String   @id
+  email    String
+  oldEmail String?
+  token    String   @unique
+  expires  DateTime
 
   @@unique([email, token])
+}
+
+model exercises {
+  id                String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  body_part         String?
+  equipment         String?
+  gif_url           String?
+  api_id            String?
+  name              String?
+  target            String?
+  secondary_muscles String[]
+  instructions      String[]
 }
 
 enum UserRole {

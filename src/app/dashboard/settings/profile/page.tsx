@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import UserProfile from "@/components/user/Profile";
+import UserProfile from "@/components/settings/Profile";
 
 export default async function Page() {
     const session = await auth();

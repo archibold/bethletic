@@ -4,7 +4,7 @@ export default function UserNav() {
     return (
         <div>
             {/* <Link href="/dashboard/user/favorite">Favorite</Link> */}
-            <Link href="/dashboard/user/profile">Profile</Link>
+            <Link href="/dashboard/settings/profile">Profile</Link>
         </div>
     );
 }

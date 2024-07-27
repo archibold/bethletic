@@ -1,10 +1,15 @@
+const url = process.env.GIF_URL_PATH || "";
 export function getSmallImageUrl(gif_url: string) {
     return (
-        gif_url.substring(0, 50) +
+        url.substring(0, 50) +
         "w_150/q_50/f_auto/" +
-        gif_url.substring(50) +
-        ".gif"
+        url.substring(50) +
+        gif_url
     );
+}
+
+export function getImageUrl(gif_url: string | null) {
+    return url + gif_url;
 }
 
 export function capitalize(text: string): string {

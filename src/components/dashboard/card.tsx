@@ -3,14 +3,14 @@ import Image from "next/image";
 import Tag from "./tag";
 import Link from "next/link";
 import { getSmallImageUrl } from "@/lib/utils";
-import { CardExercise } from "@/lib/data2";
+import { CardExercises } from "@/lib/data2";
 
 export default function Card({
     exercise,
     category,
     subcategory,
 }: {
-    exercise: CardExercise;
+    exercise: CardExercises;
     category?: string;
     subcategory?: string;
 }) {
@@ -21,6 +21,7 @@ export default function Card({
     }
 
     const gif_url = getSmallImageUrl(exercise.gif_url!);
+    console.log(gif_url);
 
     return (
         <div className="w-full md:col-span-2 rounded-xl bg-gray-100 hover:bg-gray-200 relative ">
